@@ -292,17 +292,9 @@
       Plotly.newPlot('map', [choroplethTrace, labelTrace], layout, { responsive: true, displayModeBar: false });
     }
 
-    // Smooth update function using Plotly.relayout for active zoom/pan
-    function updateMapLayout() {
-      Plotly.relayout('map', {
-        'geo.center': currentCenter,
-        'geo.zoom': currentZoom
-      });
-    }
-
     function zoomMap(factor) {
       currentZoom *= factor;
-      updateMapLayout();
+      drawMap(); // Re-render with new zoom level
     }
 
     function panMap(direction) {
@@ -311,7 +303,7 @@
       if (direction === 'down') currentCenter.lat -= step;
       if (direction === 'left') currentCenter.lon -= step;
       if (direction === 'right') currentCenter.lon += step;
-      updateMapLayout();
+      drawMap(); // Re-render with new center
     }
 
     function resetMap() {
