@@ -98,7 +98,7 @@
 
     function zoomMap(factor) {
       currentZoom *= factor;
-      drawMap();
+      Plotly.relayout('map', { 'geo.zoom': currentZoom });
     }
 
     function panMap(direction) {
@@ -107,7 +107,7 @@
       if (direction === 'down') currentCenter.lat -= step;
       if (direction === 'left') currentCenter.lon -= step;
       if (direction === 'right') currentCenter.lon += step;
-      drawMap();
+      Plotly.relayout('map', { 'geo.center': currentCenter });
     }
 
     function resetMap() {
@@ -118,25 +118,18 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Helper to bind both click and touch events robustly
-    function bindAction(id, action) {
-      const el = document.getElementById(id);
-      if (el) {
-        el.addEventListener('click', (e) => { e.preventDefault(); action(); });
-        el.addEventListener('touchend', (e) => { e.preventDefault(); action(); });
-      }
-    }
-
-    // Attach event listeners
-    bindAction('btn-overview', resetMap);
-    bindAction('btn-summary', () => document.getElementById('summary-table').scrollIntoView({ behavior: 'smooth' }));
-    bindAction('btn-up', () => panMap('up'));
-    bindAction('btn-down', () => panMap('down'));
-    bindAction('btn-left', () => panMap('left'));
-    bindAction('btn-right', () => panMap('right'));
-    bindAction('btn-zoomin', () => zoomMap(1.3));
-    bindAction('btn-zoomout', () => zoomMap(0.7));
-    bindAction('btn-reset', resetMap);
+    // Direct event listener binding
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('btn-overview').onclick = resetMap;
+      document.getElementById('btn-summary').onclick = () => document.getElementById('summary-table').scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('btn-up').onclick = () => panMap('up');
+      document.getElementById('btn-down').onclick = () => panMap('down');
+      document.getElementById('btn-left').onclick = () => panMap('left');
+      document.getElementById('btn-right').onclick = () => panMap('right');
+      document.getElementById('btn-zoomin').onclick = () => zoomMap(1.3);
+      document.getElementById('btn-zoomout').onclick = () => zoomMap(0.7);
+      document.getElementById('btn-reset').onclick = resetMap;
+    });
 
     // Initial render
     drawMap();
