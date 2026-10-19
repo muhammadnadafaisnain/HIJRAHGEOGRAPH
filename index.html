@@ -26,6 +26,9 @@
       align-items: center;
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
       box-sizing: border-box;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
     .brand {
       font-weight: 700;
@@ -34,13 +37,13 @@
     }
     .nav-buttons {
       display: flex;
-      gap: 10px;
+      gap: 8px;
     }
     .nav-btn {
       background: #334155;
       color: #ffffff;
       border: none;
-      padding: 6px 14px;
+      padding: 6px 12px;
       border-radius: 6px;
       font-size: 13px;
       cursor: pointer;
@@ -59,26 +62,143 @@
       flex-direction: column;
       align-items: center;
     }
+    /* Map Navigation Toolbar Overlay */
+    .map-toolbar {
+      width: 100%;
+      max-width: 1100px;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 8px;
+      background: #ffffff;
+      padding: 8px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      box-sizing: border-box;
+      flex-wrap: wrap;
+    }
+    .map-tool-btn {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      color: #334155;
+      padding: 5px 10px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .map-tool-btn:hover {
+      background: #e2e8f0;
+    }
     #map {
       width: 100%;
-      height: 75vh;
+      height: 70vh;
       min-height: 450px;
       background: #ffffff;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
+    /* Summary Data Table Window */
+    .summary-section {
+      width: 100%;
+      max-width: 1100px;
+      background: #ffffff;
+      margin-top: 30px;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      box-sizing: border-box;
+    }
+    .summary-section h2 {
+      font-size: 18px;
+      color: #1e293b;
+      margin-top: 0;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 10px;
+    }
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      text-align: left;
+      white-space: nowrap;
+    }
+    th, td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    th {
+      background: #f8fafc;
+      color: #475569;
+      font-weight: 600;
+    }
+    tr:hover {
+      background: #f8fafc;
+    }
+    .pos { color: #047857; font-weight: 600; }
+    .neg { color: #b91c1c; font-weight: 600; }
   </style>
 </head>
 <body>
 
+  <!-- Top Navigation Pane -->
   <header>
     <div class="brand">HIJRAHGEOGRAPH</div>
     <div class="nav-buttons">
-      <button class="nav-btn primary" onclick="drawMap()">Overview Map</button>
-      <button class="nav-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">Summary</button>
-      <button class="nav-btn" onclick="drawMap()">Reset View</button>
+      <button class="nav-btn primary" onclick="resetMap()">Overview Map</button>
+      <button class="nav-btn" onclick="document.getElementById('summary-table').scrollIntoView({behavior: 'smooth'})">Summary Data</button>
     </div>
   </header>
 
   <div class="container">
-    <div id="map">
+    <!-- Map Pan / Zoom Navigation Pane Bar -->
+    <div class="map-toolbar">
+      <span style="font-size: 12px; font-weight:600; align-self:center; margin-right: 5px; color:#475569;">Map Controls:</span>
+      <button class="map-tool-btn" onclick="panMap('up')">⬆ Up</button>
+      <button class="map-tool-btn" onclick="panMap('down')">⬇ Down</button>
+      <button class="map-tool-btn" onclick="panMap('left')">⬅ Left</button>
+      <button class="map-tool-btn" onclick="panMap('right')">➡ Right</button>
+      <button class="map-tool-btn" onclick="zoomMap(1.3)">➕ Zoom In</button>
+      <button class="map-tool-btn" onclick="zoomMap(0.7)">➖ Zoom Out</button>
+      <button class="map-tool-btn" onclick="resetMap()" style="background:#e2e8f0;">🔄 Reset</button>
+    </div>
+
+    <!-- Map Container -->
+    <div id="map"></div>
+  </div>
+
+  <!-- Summary Window & Data Table Section -->
+  <div class="summary-section" id="summary-table">
+    <h2>Asia-Pacific 1-Year Stock Index Performance Summary</h2>
+    <p style="font-size: 13px; color: #64748b;">Source: Bloomberg 2026[cite: 1] | Unweighted regional average: <b>+10.85%</b> across 19 markets[cite: 1].</p>
+    <div class="table-responsive">
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Country / Territory</th>
+            <th>Constituent Indexes</th>
+            <th>1-Year Average Change (%)</th>
+            <th>Performance Tier</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>Taiwan[cite: 1]</td><td>3[cite: 1]</td><td class="pos">+69.08%[cite: 1]</td><td>🟢 Surge (> +20%)</td></tr>
+          <tr><td>2</td><td>South Korea[cite: 1]</td><td>6[cite: 1]</td><td class="pos">+62.48%[cite: 1]</td><td>🟢 Surge (> +20%)</td></tr>
+          <tr><td>3</td><td>Mongolia[cite: 1]</td><td>1[cite: 1]</td><td class="pos">+36.14%[cite: 1]</td><td>🟢 Surge (> +20%)</td></tr>
+          <tr><td>4</td><td>Thailand[cite: 1]</td><td>2[cite: 1]</td><td class="pos">+25.59%[cite: 1]</td><td>🟢 Surge (> +20%)</td></tr>
+          <tr><td>5</td><td>Singapore[cite: 1]</td><td>2[cite: 1]</td><td class="pos">+23.77%[cite: 1]</td><td>🟢 Surge (> +20%)</td></tr>
+          <tr><td>6</td><td>Japan[cite: 1]</td><td>11[cite: 1]</td><td class="pos">+21.13%[cite: 1]</td><td>🟢 Surge (> +20%)</td></tr>
+          <tr><td>7</td><td>Sri Lanka[cite: 1]</td><td>1[cite: 1]</td><td class="pos">+11.13%[cite: 1]</td><td>🟩 Moderate Gain</td></tr>
+          <tr><td>8</td><td>Bangladesh[cite: 1]</td><td>1[cite: 1]</td><td class="pos">+7.50%[cite: 1]</td><td>🟩 Moderate Gain</td></tr>
+          <tr><td>9</td><td>Laos[cite: 1]</td><td>1[cite: 1]</td><td class="pos">+3.19%[cite: 1]</td><td>🟩 Moderate Gain</td></tr>
+          <tr><td>10</td><td>China[cite: 1]</td><td>12[cite: 1]</td><td class="pos">+2.70%[cite: 1]</td><td>🟩 Moderate Gain</td></tr>
+          <tr><td>11</td><td>Pakistan[cite: 1]</td><td>3[cite: 1]</td><td class="pos">+2.18%[cite: 1]</td><td>🟩 Moderate Gain</td></tr>
+          <tr><td>12</td><td>Australia[cite: 1]</td><td>3[cite: 1]</td><td class="pos">+0.92%[cite: 1]</td><td>🟩 Moderate Gain</td></tr>
+          <tr><td>13</td><td>Malaysia[cite: 1]</td><td>2[cite: 1]</td><td class="pos">+0.09%[cite: 1]</td><td>🟩 Moderate Gain</td></tr>
+          <tr><td>14</td><td>New Zealand[cite: 1]</td><td>3[cite: 1]</td><td class="neg">-0.62%[cite: 1]</td><td>🟨 Mild Pullback</td></tr>
+          <tr><td>15</td><td>Hong Kong[cite: 1]</td><td>11[cite: 1]</td><td class="neg">-3.59%
