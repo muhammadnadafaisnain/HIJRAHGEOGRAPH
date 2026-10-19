@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Asia-Pacific 1-Year Stock Index Trend Map By Hijrahgeograph</title>
+  <!-- Load Plotly JS from CDN -->
   <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
   <style>
     body {
@@ -15,7 +16,6 @@
       flex-direction: column;
       align-items: center;
     }
-    /* Navigation Pane Styles */
     header {
       width: 100%;
       background: #1e293b;
@@ -44,21 +44,13 @@
       border-radius: 6px;
       font-size: 13px;
       cursor: pointer;
-      transition: background 0.2s, transform 0.1s;
     }
     .nav-btn:hover {
       background: #475569;
     }
-    .nav-btn:active {
-      transform: scale(0.97);
-    }
     .nav-btn.primary {
       background: #0d9488;
     }
-    .nav-btn.primary:hover {
-      background: #0f766e;
-    }
-    /* Map Container Styles */
     .container {
       width: 100%;
       max-width: 1100px;
@@ -79,125 +71,14 @@
 </head>
 <body>
 
-  <!-- Navigation Pane with Functional Buttons -->
   <header>
     <div class="brand">HIJRAHGEOGRAPH</div>
     <div class="nav-buttons">
-      <button class="nav-btn primary" onclick="renderMap()">Overview Map</button>
+      <button class="nav-btn primary" onclick="drawMap()">Overview Map</button>
       <button class="nav-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">Summary</button>
-      <button class="nav-btn" onclick="renderMap()">Reset View</button>
+      <button class="nav-btn" onclick="drawMap()">Reset View</button>
     </div>
   </header>
 
-  <!-- Map Container -->
   <div class="container">
-    <div id="map"></div>
-  </div>
-
-  <script>
-    const countries = [
-      { iso: 'TWN', name: 'Taiwan',      val: 69.08,  lat: 23.7,  lon: 121.0, pos: 'middle right' },
-      { iso: 'KOR', name: 'South Korea', val: 62.48,  lat: 36.5,  lon: 127.8, pos: 'top center' },
-      { iso: 'MNG', name: 'Mongolia',    val: 36.14,  lat: 46.8,  lon: 103.8, pos: 'middle center' },
-      { iso: 'THA', name: 'Thailand',    val: 25.59,  lat: 15.2,  lon: 100.5, pos: 'middle left' },
-      { iso: 'SGP', name: 'Singapore',   val: 23.77,  lat: 1.35,  lon: 103.8, pos: 'bottom right' },
-      { iso: 'JPN', name: 'Japan',       val: 21.13,  lat: 36.2,  lon: 138.2, pos: 'middle right' },
-      { iso: 'LKA', name: 'Sri Lanka',   val: 11.13,  lat: 7.9,   lon: 80.8,  pos: 'bottom center' },
-      { iso: 'BGD', name: 'Bangladesh',  val: 7.50,   lat: 23.8,  lon: 90.4,  pos: 'top right' },
-      { iso: 'LAO', name: 'Laos',        val: 3.19,   lat: 19.8,  lon: 102.5, pos: 'top right' },
-      { iso: 'CHN', name: 'China',       val: 2.70,   lat: 35.8,  lon: 103.0, pos: 'middle center' },
-      { iso: 'PAK', name: 'Pakistan',    val: 2.18,   lat: 30.4,  lon: 69.3,  pos: 'middle center' },
-      { iso: 'AUS', name: 'Australia',   val: 0.92,   lat: -25.3, lon: 133.8, pos: 'middle center' },
-      { iso: 'MYS', name: 'Malaysia',    val: 0.09,   lat: 4.5,   lon: 101.5, pos: 'top left' },
-      { iso: 'NZL', name: 'New Zealand', val: -0.62,  lat: -41.5, lon: 172.5, pos: 'middle right' },
-      { iso: 'HKG', name: 'Hong Kong',   val: -3.59,  lat: 22.3,  lon: 114.2, pos: 'bottom left' },
-      { iso: 'VNM', name: 'Vietnam',     val: -4.22,  lat: 14.5,  lon: 108.5, pos: 'middle right' },
-      { iso: 'PHL', name: 'Philippines', val: -4.55,  lat: 12.9,  lon: 122.0, pos: 'middle right' },
-      { iso: 'IND', name: 'India',       val: -8.90,  lat: 21.0,  lon: 78.9,  pos: 'middle center' },
-      { iso: 'IDN', name: 'Indonesia',   val: -37.83, lat: -2.5,  lon: 118.0, pos: 'middle center' }
-    ];
-
-    const formatVal = (v) => (v > 0 ? `+${v.toFixed(2)}%` : `${v.toFixed(2)}%`);
-
-    function renderMap() {
-      const isPortrait = window.innerHeight > window.innerWidth;
-
-      const choroplethTrace = {
-        type: 'choropleth',
-        locationmode: 'ISO-3',
-        locations: countries.map(c => c.iso),
-        z: countries.map(c => c.val),
-        text: countries.map(c => `${c.name}: ${formatVal(c.val)}`),
-        hoverinfo: 'text',
-        colorscale: [
-          [0.0, '#b71c1c'],
-          [0.35, '#ffffff'],
-          [0.55, '#66bb6a'],
-          [1.0, '#004d40']
-        ],
-        zmin: -40,
-        zmax: 70,
-        colorbar: {
-          title: { text: '1-Year Avg', font: { size: 10 } },
-          ticksuffix: '%',
-          len: isPortrait ? 0.35 : 0.6,
-          thickness: 10,
-          y: isPortrait ? 0.35 : 0.5,
-          x: isPortrait ? 0.88 : 0.92,
-          font: { size: 9 }
-        }
-      };
-
-      const labelTrace = {
-        type: 'scattergeo',
-        mode: 'markers+text',
-        lat: countries.map(c => c.lat),
-        lon: countries.map(c => c.lon),
-        text: countries.map(c => `<b>${c.name}</b><br>${formatVal(c.val)}`),
-        textposition: countries.map(c => c.pos),
-        hoverinfo: 'skip',
-        marker: { size: 3, color: '#111111' },
-        textfont: {
-          family: 'Segoe UI, Arial, sans-serif',
-          size: isPortrait ? 8.5 : 10,
-          color: '#111111'
-        }
-      };
-
-      const layout = {
-        title: {
-          text: '<b>Asia-Pacific 1-Year Stock Index Trend</b><br><sub style="font-size:11px;color:#666;">By Hijrahgeograph | Source: Bloomberg 2026</sub>',
-          font: { size: isPortrait ? 13 : 16 },
-          y: 0.96
-        },
-        margin: { t: 45, b: 0, l: 0, r: 0 },
-        geo: {
-          scope: 'asia',
-          projection: { type: 'mercator' },
-          center: { 
-            lat: isPortrait ? 15 : 10, 
-            lon: isPortrait ? 112 : 115 
-          },
-          zoom: isPortrait ? 1.5 : 2.2,
-          showland: true,
-          landcolor: '#f0f0f0',
-          showocean: true,
-          oceancolor: '#e3f2fd',
-          showcountries: true,
-          countrycolor: '#bdbdbd',
-          countrywidth: 0.6
-        }
-      };
-
-      Plotly.react('map', [choroplethTrace, labelTrace], layout, { responsive: true, displayModeBar: false });
-    }
-
-    // Render immediately on load
-    window.onload = function() {
-      renderMap();
-    };
-
-    window.addEventListener('resize', renderMap);
-  </script>
-</body>
-</html>
+    <div id="map">
