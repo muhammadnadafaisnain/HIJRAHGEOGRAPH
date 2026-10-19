@@ -12,23 +12,18 @@
       margin: 0;
       padding: 0;
       background: #f4f6f8;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      color: #333;
     }
     header {
       width: 100%;
       background: #1e293b;
       color: #ffffff;
-      padding: 12px 20px;
+      padding: 15px 25px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 2px 6px rgba(0,0,0,0.15);
       box-sizing: border-box;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
     }
     .brand {
       font-weight: 700;
@@ -37,13 +32,13 @@
     }
     .nav-buttons {
       display: flex;
-      gap: 8px;
+      gap: 10px;
     }
     .nav-btn {
       background: #334155;
       color: #ffffff;
       border: none;
-      padding: 6px 12px;
+      padding: 8px 16px;
       border-radius: 6px;
       font-size: 13px;
       cursor: pointer;
@@ -55,33 +50,27 @@
       background: #0d9488;
     }
     .container {
-      width: 100%;
+      width: 95%;
       max-width: 1100px;
-      padding: 20px 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      margin: 20px auto;
     }
-    /* Map Navigation Toolbar Overlay */
+    /* Map Control Toolbar */
     .map-toolbar {
-      width: 100%;
-      max-width: 1100px;
       display: flex;
       justify-content: center;
       gap: 6px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       background: #ffffff;
-      padding: 8px;
+      padding: 10px;
       border-radius: 8px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      box-sizing: border-box;
       flex-wrap: wrap;
     }
     .map-tool-btn {
       background: #f1f5f9;
       border: 1px solid #cbd5e1;
       color: #334155;
-      padding: 5px 10px;
+      padding: 6px 12px;
       border-radius: 4px;
       font-size: 12px;
       font-weight: 600;
@@ -92,22 +81,18 @@
     }
     #map {
       width: 100%;
-      height: 70vh;
-      min-height: 450px;
+      height: 650px;
       background: #ffffff;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
     /* Summary Data Table Window */
     .summary-section {
-      width: 100%;
-      max-width: 1100px;
       background: #ffffff;
-      margin-top: 30px;
-      padding: 20px;
+      margin: 40px auto;
+      padding: 25px;
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      box-sizing: border-box;
     }
     .summary-section h2 {
       font-size: 18px;
@@ -128,7 +113,7 @@
       white-space: nowrap;
     }
     th, td {
-      padding: 10px 12px;
+      padding: 12px;
       border-bottom: 1px solid #e2e8f0;
     }
     th {
@@ -155,7 +140,7 @@
   </header>
 
   <div class="container">
-    <!-- Map Pan / Zoom Navigation Pane Bar -->
+    <!-- Map Pan / Zoom Navigation Toolbar -->
     <div class="map-toolbar">
       <span style="font-size: 12px; font-weight:600; align-self:center; margin-right: 5px; color:#475569;">Map Controls:</span>
       <button class="map-tool-btn" onclick="panMap('up')">⬆ Up</button>
@@ -169,36 +154,171 @@
 
     <!-- Map Container -->
     <div id="map"></div>
+
+    <!-- Summary Data Table Window -->
+    <div class="summary-section" id="summary-table">
+      <h2>Asia-Pacific 1-Year Stock Index Performance Summary</h2>
+      <p style="font-size: 13px; color: #64748b;">Source: Bloomberg 2026 | Unweighted regional average: <b>+10.85%</b> across 19 markets.</p>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Country / Territory</th>
+              <th>Constituent Indexes</th>
+              <th>1-Year Average Change (%)</th>
+              <th>Performance Tier</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1</td><td>Taiwan</td><td>3</td><td class="pos">+69.08%</td><td>🟢 Surge (> +20%)</td></tr>
+            <tr><td>2</td><td>South Korea</td><td>6</td><td class="pos">+62.48%</td><td>🟢 Surge (> +20%)</td></tr>
+            <tr><td>3</td><td>Mongolia</td><td>1</td><td class="pos">+36.14%</td><td>🟢 Surge (> +20%)</td></tr>
+            <tr><td>4</td><td>Thailand</td><td>2</td><td class="pos">+25.59%</td><td>🟢 Surge (> +20%)</td></tr>
+            <tr><td>5</td><td>Singapore</td><td>2</td><td class="pos">+23.77%</td><td>🟢 Surge (> +20%)</td></tr>
+            <tr><td>6</td><td>Japan</td><td>11</td><td class="pos">+21.13%</td><td>🟢 Surge (> +20%)</td></tr>
+            <tr><td>7</td><td>Sri Lanka</td><td>1</td><td class="pos">+11.13%</td><td>🟩 Moderate Gain</td></tr>
+            <tr><td>8</td><td>Bangladesh</td><td>1</td><td class="pos">+7.50%</td><td>🟩 Moderate Gain</td></tr>
+            <tr><td>9</td><td>Laos</td><td>1</td><td class="pos">+3.19%</td><td>🟩 Moderate Gain</td></tr>
+            <tr><td>10</td><td>China</td><td>12</td><td class="pos">+2.70%</td><td>🟩 Moderate Gain</td></tr>
+            <tr><td>11</td><td>Pakistan</td><td>3</td><td class="pos">+2.18%</td><td>🟩 Moderate Gain</td></tr>
+            <tr><td>12</td><td>Australia</td><td>3</td><td class="pos">+0.92%</td><td>🟩 Moderate Gain</td></tr>
+            <tr><td>13</td><td>Malaysia</td><td>2</td><td class="pos">+0.09%</td><td>🟩 Moderate Gain</td></tr>
+            <tr><td>14</td><td>New Zealand</td><td>3</td><td class="neg">-0.62%</td><td>🟨 Mild Pullback</td></tr>
+            <tr><td>15</td><td>Hong Kong</td><td>11</td><td class="neg">-3.59%</td><td>🟨 Mild Pullback</td></tr>
+            <tr><td>16</td><td>Vietnam</td><td>2</td><td class="neg">-4.22%</td><td>🟨 Mild Pullback</td></tr>
+            <tr><td>17</td><td>Philippines</td><td>1</td><td class="neg">-4.55%</td><td>🟨 Mild Pullback</td></tr>
+            <tr><td>18</td><td>India</td><td>5</td><td class="neg">-8.90%</td><td>🔴 Contraction</td></tr>
+            <tr><td>19</td><td>Indonesia</td><td>2</td><td class="neg">-37.83%</td><td>🔴 Contraction</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
-  <!-- Summary Window & Data Table Section -->
-  <div class="summary-section" id="summary-table">
-    <h2>Asia-Pacific 1-Year Stock Index Performance Summary</h2>
-    <p style="font-size: 13px; color: #64748b;">Source: Bloomberg 2026[cite: 1] | Unweighted regional average: <b>+10.85%</b> across 19 markets[cite: 1].</p>
-    <div class="table-responsive">
-      <table>
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Country / Territory</th>
-            <th>Constituent Indexes</th>
-            <th>1-Year Average Change (%)</th>
-            <th>Performance Tier</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>1</td><td>Taiwan[cite: 1]</td><td>3[cite: 1]</td><td class="pos">+69.08%[cite: 1]</td><td>🟢 Surge (> +20%)</td></tr>
-          <tr><td>2</td><td>South Korea[cite: 1]</td><td>6[cite: 1]</td><td class="pos">+62.48%[cite: 1]</td><td>🟢 Surge (> +20%)</td></tr>
-          <tr><td>3</td><td>Mongolia[cite: 1]</td><td>1[cite: 1]</td><td class="pos">+36.14%[cite: 1]</td><td>🟢 Surge (> +20%)</td></tr>
-          <tr><td>4</td><td>Thailand[cite: 1]</td><td>2[cite: 1]</td><td class="pos">+25.59%[cite: 1]</td><td>🟢 Surge (> +20%)</td></tr>
-          <tr><td>5</td><td>Singapore[cite: 1]</td><td>2[cite: 1]</td><td class="pos">+23.77%[cite: 1]</td><td>🟢 Surge (> +20%)</td></tr>
-          <tr><td>6</td><td>Japan[cite: 1]</td><td>11[cite: 1]</td><td class="pos">+21.13%[cite: 1]</td><td>🟢 Surge (> +20%)</td></tr>
-          <tr><td>7</td><td>Sri Lanka[cite: 1]</td><td>1[cite: 1]</td><td class="pos">+11.13%[cite: 1]</td><td>🟩 Moderate Gain</td></tr>
-          <tr><td>8</td><td>Bangladesh[cite: 1]</td><td>1[cite: 1]</td><td class="pos">+7.50%[cite: 1]</td><td>🟩 Moderate Gain</td></tr>
-          <tr><td>9</td><td>Laos[cite: 1]</td><td>1[cite: 1]</td><td class="pos">+3.19%[cite: 1]</td><td>🟩 Moderate Gain</td></tr>
-          <tr><td>10</td><td>China[cite: 1]</td><td>12[cite: 1]</td><td class="pos">+2.70%[cite: 1]</td><td>🟩 Moderate Gain</td></tr>
-          <tr><td>11</td><td>Pakistan[cite: 1]</td><td>3[cite: 1]</td><td class="pos">+2.18%[cite: 1]</td><td>🟩 Moderate Gain</td></tr>
-          <tr><td>12</td><td>Australia[cite: 1]</td><td>3[cite: 1]</td><td class="pos">+0.92%[cite: 1]</td><td>🟩 Moderate Gain</td></tr>
-          <tr><td>13</td><td>Malaysia[cite: 1]</td><td>2[cite: 1]</td><td class="pos">+0.09%[cite: 1]</td><td>🟩 Moderate Gain</td></tr>
-          <tr><td>14</td><td>New Zealand[cite: 1]</td><td>3[cite: 1]</td><td class="neg">-0.62%[cite: 1]</td><td>🟨 Mild Pullback</td></tr>
-          <tr><td>15</td><td>Hong Kong[cite: 1]</td><td>11[cite: 1]</td><td class="neg">-3.59%
+  <script>
+    const countries = [
+      { iso: 'TWN', name: 'Taiwan',      val: 69.08,  lat: 23.7,  lon: 121.0, pos: 'middle right' },
+      { iso: 'KOR', name: 'South Korea', val: 62.48,  lat: 36.5,  lon: 127.8, pos: 'top center' },
+      { iso: 'MNG', name: 'Mongolia',    val: 36.14,  lat: 46.8,  lon: 103.8, pos: 'middle center' },
+      { iso: 'THA', name: 'Thailand',    val: 25.59,  lat: 15.2,  lon: 100.5, pos: 'middle left' },
+      { iso: 'SGP', name: 'Singapore',   val: 23.77,  lat: 1.35,  lon: 103.8, pos: 'bottom right' },
+      { iso: 'JPN', name: 'Japan',       val: 21.13,  lat: 36.2,  lon: 138.2, pos: 'middle right' },
+      { iso: 'LKA', name: 'Sri Lanka',   val: 11.13,  lat: 7.9,   lon: 80.8,  pos: 'bottom center' },
+      { iso: 'BGD', name: 'Bangladesh',  val: 7.50,   lat: 23.8,  lon: 90.4,  pos: 'top right' },
+      { iso: 'LAO', name: 'Laos',        val: 3.19,   lat: 19.8,  lon: 102.5, pos: 'top right' },
+      { iso: 'CHN', name: 'China',       val: 2.70,   lat: 35.8,  lon: 103.0, pos: 'middle center' },
+      { iso: 'PAK', name: 'Pakistan',    val: 2.18,   lat: 30.4,  lon: 69.3,  pos: 'middle center' },
+      { iso: 'AUS', name: 'Australia',   val: 0.92,   lat: -25.3, lon: 133.8, pos: 'middle center' },
+      { iso: 'MYS', name: 'Malaysia',    val: 0.09,   lat: 4.5,   lon: 101.5, pos: 'top left' },
+      { iso: 'NZL', name: 'New Zealand', val: -0.62,  lat: -41.5, lon: 172.5, pos: 'middle right' },
+      { iso: 'HKG', name: 'Hong Kong',   val: -3.59,  lat: 22.3,  lon: 114.2, pos: 'bottom left' },
+      { iso: 'VNM', name: 'Vietnam',     val: -4.22,  lat: 14.5,  lon: 108.5, pos: 'middle right' },
+      { iso: 'PHL', name: 'Philippines', val: -4.55,  lat: 12.9,  lon: 122.0, pos: 'middle right' },
+      { iso: 'IND', name: 'India',       val: -8.90,  lat: 21.0,  lon: 78.9,  pos: 'middle center' },
+      { iso: 'IDN', name: 'Indonesia',   val: -37.83, lat: -2.5,  lon: 118.0, pos: 'middle center' }
+    ];
+
+    const formatVal = (v) => (v > 0 ? `+${v.toFixed(2)}%` : `${v.toFixed(2)}%`);
+
+    let currentCenter = { lat: 10, lon: 115 };
+    let currentZoom = 1.8;
+
+    function drawMap() {
+      const isPortrait = window.innerHeight > window.innerWidth;
+
+      const choroplethTrace = {
+        type: 'choropleth',
+        locationmode: 'ISO-3',
+        locations: countries.map(c => c.iso),
+        z: countries.map(c => c.val),
+        text: countries.map(c => `${c.name}: ${formatVal(c.val)}`),
+        hoverinfo: 'text',
+        colorscale: [
+          [0.0, '#b71c1c'],
+          [0.35, '#ffffff'],
+          [0.55, '#66bb6a'],
+          [1.0, '#004d40']
+        ],
+        zmin: -40,
+        zmax: 70,
+        colorbar: {
+          title: { text: '1-Year Avg', font: { size: 10 } },
+          ticksuffix: '%',
+          len: isPortrait ? 0.35 : 0.6,
+          thickness: 10,
+          y: isPortrait ? 0.35 : 0.5,
+          x: isPortrait ? 0.88 : 0.92,
+          font: { size: 9 }
+        }
+      };
+
+      const labelTrace = {
+        type: 'scattergeo',
+        mode: 'markers+text',
+        lat: countries.map(c => c.lat),
+        lon: countries.map(c => c.lon),
+        text: countries.map(c => `<b>${c.name}</b><br>${formatVal(c.val)}`),
+        textposition: countries.map(c => c.pos),
+        hoverinfo: 'skip',
+        marker: { size: 3, color: '#111111' },
+        textfont: {
+          family: 'Segoe UI, Arial, sans-serif',
+          size: isPortrait ? 8.5 : 10,
+          color: '#111111'
+        }
+      };
+
+      const layout = {
+        title: {
+          text: '<b>Asia-Pacific 1-Year Stock Index Trend</b><br><sub style="font-size:11px;color:#666;">By Hijrahgeograph | Source: Bloomberg 2026</sub>',
+          font: { size: isPortrait ? 13 : 16 },
+          y: 0.96
+        },
+        margin: { t: 45, b: 0, l: 0, r: 0 },
+        geo: {
+          scope: 'asia',
+          projection: { type: 'mercator' },
+          center: currentCenter,
+          zoom: currentZoom,
+          showland: true,
+          landcolor: '#f0f0f0',
+          showocean: true,
+          oceancolor: '#e3f2fd',
+          showcountries: true,
+          countrycolor: '#bdbdbd',
+          countrywidth: 0.6
+        }
+      };
+
+      Plotly.newPlot('map', [choroplethTrace, labelTrace], layout, { responsive: true, displayModeBar: false });
+    }
+
+    function zoomMap(factor) {
+      currentZoom *= factor;
+      drawMap();
+    }
+
+    function panMap(direction) {
+      const step = 5 / currentZoom;
+      if (direction === 'up') currentCenter.lat += step;
+      if (direction === 'down') currentCenter.lat -= step;
+      if (direction === 'left') currentCenter.lon -= step;
+      if (direction === 'right') currentCenter.lon += step;
+      drawMap();
+    }
+
+    function resetMap() {
+      const isPortrait = window.innerHeight > window.innerWidth;
+      currentCenter = { lat: isPortrait ? 15 : 10, lon: isPortrait ? 112 : 115 };
+      currentZoom = isPortrait ? 1.5 : 2.2;
+      drawMap();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Load map immediately when script runs
+    drawMap();
+    window.addEventListener('resize', drawMap);
+  </script>
+</body>
+</html>
