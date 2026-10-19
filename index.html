@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Asia-Pacific 1-Year Stock Index Trend Map By Hijrahgeograph</title>
-  <!-- Load Plotly JS from CDN -->
   <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
   <style>
     body {
@@ -54,7 +53,6 @@
       max-width: 1100px;
       margin: 20px auto;
     }
-    /* Map Control Toolbar */
     .map-toolbar {
       display: flex;
       justify-content: center;
@@ -86,7 +84,6 @@
       border-radius: 8px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     }
-    /* Summary Data Table Window */
     .summary-section {
       background: #ffffff;
       margin: 40px auto;
@@ -140,7 +137,7 @@
   </header>
 
   <div class="container">
-    <!-- Map Pan / Zoom Navigation Toolbar -->
+    <!-- Map Control Toolbar -->
     <div class="map-toolbar">
       <span style="font-size: 12px; font-weight:600; align-self:center; margin-right: 5px; color:#475569;">Map Controls:</span>
       <button class="map-tool-btn" onclick="panMap('up')">⬆ Up</button>
@@ -155,7 +152,7 @@
     <!-- Map Container -->
     <div id="map"></div>
 
-    <!-- Summary Data Table Window -->
+    <!-- Summary Data Table Window (Cleaned of all citations) -->
     <div class="summary-section" id="summary-table">
       <h2>Asia-Pacific 1-Year Stock Index Performance Summary</h2>
       <p style="font-size: 13px; color: #64748b;">Source: Bloomberg 2026 | Unweighted regional average: <b>+10.85%</b> across 19 markets.</p>
@@ -221,8 +218,8 @@
 
     const formatVal = (v) => (v > 0 ? `+${v.toFixed(2)}%` : `${v.toFixed(2)}%`);
 
-    let currentCenter = { lat: 10, lon: 115 };
-    let currentZoom = 1.8;
+    let currentCenter = { lat: 15, lon: 115 };
+    let currentZoom = 1.6;
 
     function drawMap() {
       const isPortrait = window.innerHeight > window.innerWidth;
@@ -273,52 +270,4 @@
         title: {
           text: '<b>Asia-Pacific 1-Year Stock Index Trend</b><br><sub style="font-size:11px;color:#666;">By Hijrahgeograph | Source: Bloomberg 2026</sub>',
           font: { size: isPortrait ? 13 : 16 },
-          y: 0.96
-        },
-        margin: { t: 45, b: 0, l: 0, r: 0 },
-        geo: {
-          scope: 'asia',
-          projection: { type: 'mercator' },
-          center: currentCenter,
-          zoom: currentZoom,
-          showland: true,
-          landcolor: '#f0f0f0',
-          showocean: true,
-          oceancolor: '#e3f2fd',
-          showcountries: true,
-          countrycolor: '#bdbdbd',
-          countrywidth: 0.6
-        }
-      };
-
-      Plotly.newPlot('map', [choroplethTrace, labelTrace], layout, { responsive: true, displayModeBar: false });
-    }
-
-    function zoomMap(factor) {
-      currentZoom *= factor;
-      drawMap();
-    }
-
-    function panMap(direction) {
-      const step = 5 / currentZoom;
-      if (direction === 'up') currentCenter.lat += step;
-      if (direction === 'down') currentCenter.lat -= step;
-      if (direction === 'left') currentCenter.lon -= step;
-      if (direction === 'right') currentCenter.lon += step;
-      drawMap();
-    }
-
-    function resetMap() {
-      const isPortrait = window.innerHeight > window.innerWidth;
-      currentCenter = { lat: isPortrait ? 15 : 10, lon: isPortrait ? 112 : 115 };
-      currentZoom = isPortrait ? 1.5 : 2.2;
-      drawMap();
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-
-    // Load map immediately when script runs
-    drawMap();
-    window.addEventListener('resize', drawMap);
-  </script>
-</body>
-</html>
+          y: 0
