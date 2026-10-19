@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asia-Pacific 1-Year Stock Index Trend Map By Hijrahgeograph as of 19 October 2026</title>
+  <title>Asia-Pacific 1-Year Stock Index Trend Map By Hijrahgeograph</title>
   <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
   <style>
     body {
@@ -268,6 +268,54 @@
 
       const layout = {
         title: {
-          text: '<b>Asia-Pacific 1-Year Stock Index Trend</b><br><sub style="font-size:11px;color:#666;">By Hijrahgeograph | Source: Bloomberg 2026</sub>',
+          text: '<b>Asia-Pacific 1-Year Stock Index Trend as of 19 October 2026</b><br><sub style="font-size:11px;color:#666;">By Hijrahgeograph | Source: Bloomberg 2026</sub>',
           font: { size: isPortrait ? 13 : 16 },
-          y: 0
+          y: 0.96
+        },
+        margin: { t: 45, b: 0, l: 0, r: 0 },
+        geo: {
+          scope: 'asia',
+          projection: { type: 'mercator' },
+          center: currentCenter,
+          zoom: currentZoom,
+          showland: true,
+          landcolor: '#f0f0f0',
+          showocean: true,
+          oceancolor: '#e3f2fd',
+          showcountries: true,
+          countrycolor: '#bdbdbd',
+          countrywidth: 0.6
+        }
+      };
+
+      Plotly.newPlot('map', [choroplethTrace, labelTrace], layout, { responsive: true, displayModeBar: false });
+    }
+
+    function zoomMap(factor) {
+      currentZoom *= factor;
+      drawMap();
+    }
+
+    function panMap(direction) {
+      const step = 5 / currentZoom;
+      if (direction === 'up') currentCenter.lat += step;
+      if (direction === 'down') currentCenter.lat -= step;
+      if (direction === 'left') currentCenter.lon -= step;
+      if (direction === 'right') currentCenter.lon += step;
+      drawMap();
+    }
+
+    function resetMap() {
+      const isPortrait = window.innerHeight > window.innerWidth;
+      currentCenter = { lat: isPortrait ? 15 : 15, lon: isPortrait ? 112 : 115 };
+      currentZoom = isPortrait ? 1.5 : 1.6;
+      drawMap();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Render immediately
+    drawMap();
+    window.addEventListener('resize', drawMap);
+  </script>
+</body>
+</html>
