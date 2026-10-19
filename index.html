@@ -292,9 +292,17 @@
       Plotly.newPlot('map', [choroplethTrace, labelTrace], layout, { responsive: true, displayModeBar: false });
     }
 
+    // Smooth update function using Plotly.relayout for active zoom/pan
+    function updateMapLayout() {
+      Plotly.relayout('map', {
+        'geo.center': currentCenter,
+        'geo.zoom': currentZoom
+      });
+    }
+
     function zoomMap(factor) {
       currentZoom *= factor;
-      drawMap();
+      updateMapLayout();
     }
 
     function panMap(direction) {
@@ -303,7 +311,7 @@
       if (direction === 'down') currentCenter.lat -= step;
       if (direction === 'left') currentCenter.lon -= step;
       if (direction === 'right') currentCenter.lon += step;
-      drawMap();
+      updateMapLayout();
     }
 
     function resetMap() {
@@ -314,7 +322,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
-    // Attach event listeners cleanly
+    // Attach event listeners
     document.getElementById('btn-overview').addEventListener('click', resetMap);
     document.getElementById('btn-summary').addEventListener('click', () => {
       document.getElementById('summary-table').scrollIntoView({ behavior: 'smooth' });
