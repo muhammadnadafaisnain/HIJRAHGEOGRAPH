@@ -79,13 +79,13 @@
 </head>
 <body>
 
-  <!-- Navigation Pane with Buttons -->
+  <!-- Navigation Pane with Functional Buttons -->
   <header>
     <div class="brand">HIJRAHGEOGRAPH</div>
     <div class="nav-buttons">
-      <button class="nav-btn primary" onclick="alert('Viewing Asia-Pacific 1-Year Stock Index Trend Map')">Overview Map</button>
-      <button class="nav-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">Summary Data</button>
-      <button class="nav-btn" onclick="window.location.reload()">Reset View</button>
+      <button class="nav-btn primary" onclick="renderMap()">Overview Map</button>
+      <button class="nav-btn" onclick="window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})">Summary</button>
+      <button class="nav-btn" onclick="renderMap()">Reset View</button>
     </div>
   </header>
 
@@ -166,4 +166,38 @@
 
       const layout = {
         title: {
-          text: '<b>Asia-Pacific 1-Year Stock Index Trend</b><br><sub style="font-size
+          text: '<b>Asia-Pacific 1-Year Stock Index Trend</b><br><sub style="font-size:11px;color:#666;">By Hijrahgeograph | Source: Bloomberg 2026</sub>',
+          font: { size: isPortrait ? 13 : 16 },
+          y: 0.96
+        },
+        margin: { t: 45, b: 0, l: 0, r: 0 },
+        geo: {
+          scope: 'asia',
+          projection: { type: 'mercator' },
+          center: { 
+            lat: isPortrait ? 15 : 10, 
+            lon: isPortrait ? 112 : 115 
+          },
+          zoom: isPortrait ? 1.5 : 2.2,
+          showland: true,
+          landcolor: '#f0f0f0',
+          showocean: true,
+          oceancolor: '#e3f2fd',
+          showcountries: true,
+          countrycolor: '#bdbdbd',
+          countrywidth: 0.6
+        }
+      };
+
+      Plotly.react('map', [choroplethTrace, labelTrace], layout, { responsive: true, displayModeBar: false });
+    }
+
+    // Render immediately on load
+    window.onload = function() {
+      renderMap();
+    };
+
+    window.addEventListener('resize', renderMap);
+  </script>
+</body>
+</html>
